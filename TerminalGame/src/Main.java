@@ -1,17 +1,28 @@
 import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-
-//Line 191 https://www.w3schools.com/java/ref_string_split.asp
+import java.io.FileWriter;
+import java.io.IOException;
+import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
 public class Main {
+    static double num1 = 0;
+    static double num2 = 0;
+    static double result = 0;
+    static char operator;
+    static JTextField text = new JTextField();
+    static JButton equal = new JButton("=");
+    static String line = "";
+
     public static void main(String[] args) {
+        num1 = 0;
+        num2 = 0;
+        result = 0;
+
         JFrame f = new JFrame("Calculator!");
         JButton one = new JButton("1");
         JButton plus = new JButton("+");
         JButton two = new JButton("2");
         JButton zero = new JButton("0");
-        JButton equal = new JButton("=");
+        equal = new JButton("=");
         JButton three = new JButton("3");
         JButton four = new JButton("4");
         JButton five = new JButton("5");
@@ -23,7 +34,8 @@ public class Main {
         JButton minus = new JButton("-");
         JButton mult = new JButton("x");
         JButton div = new JButton("÷");
-        JTextField text = new JTextField();
+
+        text = new JTextField();
         text.setBounds(50, 50, 200, 30); //textfield
 
         equal.setBounds(190, 250, 50, 30);
@@ -38,8 +50,8 @@ public class Main {
         seven.setBounds(50, 200, 50, 30);
         eight.setBounds(120, 200, 50, 30);
         nine.setBounds(190, 200, 50, 30);
-        clear.setBounds(50,250,50,30);
-        minus.setBounds(260,150,50,30);
+        clear.setBounds(50, 250, 50, 30);
+        minus.setBounds(260, 150, 50, 30);
         mult.setBounds(260, 200, 50, 30);
         div.setBounds(260, 250, 50, 30);
 
@@ -64,163 +76,144 @@ public class Main {
         f.setSize(400, 400);
         f.setLayout(null);
         f.setVisible(true);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        f.setDefaultCloseOperation(EXIT_ON_CLOSE);
 
-        one.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText(); // Get the current text
-                text.setText(currentText + "1");    // Append "1"
-            }
+        // Add ActionListeners for the number buttons
+        // All ActionListeners have lambda expressions added "->"
+        one.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "1");
+            line += "1";
         });
 
-        plus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "+"); // Append "+"
-            }
+        plus.addActionListener(e -> {
+            String currentText = text.getText();
+            num1 = Double.parseDouble(currentText); // Store the first number
+            operator = '+'; // Store the operator
+            text.setText(""); // Clear the display
+            line += " + ";
         });
 
-        minus.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "-"); // Append "-"
-            }
+        minus.addActionListener(e -> {
+            String currentText = text.getText();
+            num1 = Double.parseDouble(currentText);
+            operator = '-';
+            text.setText("");
+            line += " - ";
         });
 
-        div.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "÷"); // Append "÷"
-            }
+        div.addActionListener(e -> {
+            String currentText = text.getText();
+            num1 = Double.parseDouble(currentText);
+            operator = '/';
+            text.setText("");
+            line += " / ";
         });
 
-        mult.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "x"); // Append "x"
-            }
+        mult.addActionListener(e -> {
+            String currentText = text.getText();
+            num1 = Double.parseDouble(currentText);
+            operator = '*';
+            text.setText("");
+            line += " * ";
         });
 
-        two.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "2"); // Append "2"
-            }
+        // Add ActionListeners for other number buttons
+        two.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "2");
+            line += "2";
         });
 
-        zero.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "0"); // Append "0"
-            }
+        zero.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "0");
+            line += "0";
         });
 
-        three.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "3"); // Append "3"
-            }
+        three.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "3");
+            line += "3";
         });
 
-        four.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "4"); // Append "4"
-            }
+        four.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "4");
+            line += "4";
         });
 
-        five.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "5"); // Append "5"
-            }
+        five.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "5");
+            line += "5";
         });
 
-        six.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "6"); // Append "6"
-            }
+        six.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "6");
+            line += "6";
         });
 
-        seven.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "7"); // Append "7"
-            }
+        seven.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "7");
+            line += "7";
         });
 
-        eight.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "8"); // Append "8"
-            }
+        eight.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "8");
+            line += "8";
         });
 
-        nine.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String currentText = text.getText();
-                text.setText(currentText + "9"); // Append "9"
-            }
+        nine.addActionListener(e -> {
+            String currentText = text.getText();
+            text.setText(currentText + "9");
+            line += "9";
         });
 
-        equal.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    String expression = text.getText();
-                    // Evaluate the expression
-                    int result = evaluateExpression(expression);
-                    // Set the result in the text field
-                    text.setText(String.valueOf(result));
-                } catch (Exception ex) {
-                    text.setText("Error");
-                }
-            }
+        clear.addActionListener(e ->{
+            text.setText("");
+            line = "";
         });
 
-        clear.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                text.setText("");
+        equal.addActionListener(e -> {
+            num2 = Double.parseDouble(text.getText()); // Get the second number
+            switch (operator) {
+                case '+':
+                    result = num1 + num2;
+                    break;
+                case '-':
+                    result = num1 - num2;
+                    break;
+                case '*':
+                    result = num1 * num2;
+                    break;
+                case '/':
+                    //if num2 is "0" return error - you can't divide by zero
+                    if (num2 != 0) {
+                        result = num1 / num2;
+                    } else {
+                        text.setText("Error"); // Handle division by zero
+                        return;
+                    }
+                    break;
+                default:
+                    return;
             }
+
+            num1 = result; // Store result for chained calculations
+            try {
+                FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\TerminalGame\\src\\history.txt", true);
+                myWriter.append(line).append(" = ").append(String.valueOf(result)).append("\n");
+                myWriter.close();
+                System.out.println("File updated.");
+            } catch (IOException exception) {
+                System.out.println("Error!");
+                exception.printStackTrace();
+            }
+            text.setText(line = String.valueOf(result)); // Show result
         });
-
-    }
-
-    // Method to evaluate addition and subtraction expressions
-    private static int evaluateExpression(String expression) {
-        //https://introcs.cs.princeton.edu/java/11precedence/
-        int result = 0;
-        String[] tokens = expression.split("(?=[+\\-x÷])|(?<=[+\\-x÷])"); // Split at operators while keeping them
-
-        for (int i = 0; i < tokens.length; i++) {
-            String token = tokens[i].trim();
-
-            if(token.equals("+")){
-                continue;
-            }else if (token.equals("-")){
-                result -= Integer.parseInt(tokens[++i].trim());
-            } else {
-                // Add the first number or any number after '+'
-                result += Integer.parseInt(token);
-            }
-
-        }
-        return result;
     }
 }
