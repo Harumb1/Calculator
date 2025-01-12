@@ -205,7 +205,7 @@ public class Main {
 
             num1 = result; // Store result for chained calculations
             try {
-                FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
+                FileWriter myWriter = new FileWriter("history.txt", true);
                 myWriter.append(line).append(" = ").append(String.valueOf(result)).append("\n");
                 myWriter.close();
                 System.out.println("File updated.");
