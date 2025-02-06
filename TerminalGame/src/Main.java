@@ -1,7 +1,8 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.FileWriter;
+import java.io.IOException;
 
 import static javax.swing.WindowConstants.EXIT_ON_CLOSE;
 
@@ -12,11 +13,10 @@ public  class Main{
     static double num2 = 0;
     static double result = 0;
     static char operator;
+    static double squrtres;
     static JTextField text = new JTextField();
 
     static String line = "";
-
-
 
     static JButton one = new JButton("1");
     static JButton two = new JButton("2");
@@ -34,16 +34,10 @@ public  class Main{
     static JButton div = new JButton("÷");
     static JButton plus = new JButton("+");
     static JButton equal = new JButton("=");
+    static JButton squrt = new JButton("√");
 
     public static void main(String[] args) {
-        /*/
-        Jbutton {
-            for (int i = 0; i < 10; i++) {
-                System.out.println(i);
-            }
-        }
 
-         */
 
         num1 = 0;
         num2 = 0;
@@ -68,6 +62,7 @@ public  class Main{
         minus.setBounds(250, 140, 50, 30);
         mult.setBounds(250, 190, 50, 30);
         div.setBounds(250, 240, 50, 30);
+        squrt.setBounds(40, 290, 50, 30);
 
         f.add(minus);
         f.add(text);
@@ -86,9 +81,10 @@ public  class Main{
         f.add(equal);
         f.add(div);
         f.add(mult);
+        f.add(squrt);
         f.setResizable(false);
 
-        f.setSize(350, 350);
+        f.setSize(350, 400);
         f.setLayout(null);
         f.setVisible(true);
         f.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -167,6 +163,24 @@ public  class Main{
         });
         equal.addActionListener(_ -> {
             handleEqual();
+        });
+
+        squrt.addActionListener(_ ->{
+            String currentText = text.getText();
+                text.setText(String.valueOf(Math.sqrt(Double.parseDouble(currentText))));
+                squrtres = Math.sqrt(Double.parseDouble(currentText));
+                try {
+                    FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
+                    myWriter.append("squrt(").append(currentText).append(")").append(" = ");
+                    myWriter.append(String.valueOf(squrtres)).append("\n");
+                    myWriter.close();
+                    System.out.println("File updated.");
+                } catch (IOException exception) {
+                    System.out.println("Error!");
+                    exception.printStackTrace();
+                }
+
+
         });
 
     }
@@ -368,17 +382,21 @@ public  class Main{
         }
 
         num1 = result; // Store result for chained calculations
-                    /*/
-                    try {
-                        FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
-                        myWriter.append(line).append(" = ").append(String.valueOf(result)).append("\n");
-                        myWriter.close();
-                        System.out.println("File updated.");
-                    } catch (IOException exception) {
-                        System.out.println("Error!");
-                        exception.printStackTrace();
-                    }
-                    */
+
+        try {
+            FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
+            myWriter.append(line).append(" = ").append(String.valueOf(result)).append("\n");
+            myWriter.close();
+            System.out.println("File updated.");
+        } catch (IOException exception) {
+            System.out.println("Error!");
+            exception.printStackTrace();
+        }
+
+
+
         text.setText(line = String.valueOf(result)); // Show result
+
     }
+    
 }
