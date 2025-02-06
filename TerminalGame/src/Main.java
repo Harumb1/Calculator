@@ -15,7 +15,6 @@ public  class Main{
     static char operator;
     static double squrtres;
     static JTextField text = new JTextField();
-
     static String line = "";
 
     static JButton one = new JButton("1");
@@ -35,6 +34,7 @@ public  class Main{
     static JButton plus = new JButton("+");
     static JButton equal = new JButton("=");
     static JButton squrt = new JButton("√");
+    static JButton decimal = new JButton(".");
 
     public static void main(String[] args) {
 
@@ -63,6 +63,7 @@ public  class Main{
         mult.setBounds(250, 190, 50, 30);
         div.setBounds(250, 240, 50, 30);
         squrt.setBounds(40, 290, 50, 30);
+        decimal.setBounds(110, 290, 50, 30);
 
         f.add(minus);
         f.add(text);
@@ -82,6 +83,7 @@ public  class Main{
         f.add(div);
         f.add(mult);
         f.add(squrt);
+        f.add(decimal);
         f.setResizable(false);
 
         f.setSize(350, 400);
@@ -163,6 +165,11 @@ public  class Main{
         });
         equal.addActionListener(_ -> {
             handleEqual();
+        });
+
+        decimal.addActionListener(_ -> {
+            String curretText = text.getText();
+            text.setText(curretText + ".");
         });
 
         squrt.addActionListener(_ ->{
@@ -386,6 +393,7 @@ public  class Main{
         try {
             FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
             myWriter.append(line).append(" = ").append(String.valueOf(result)).append("\n");
+            myWriter.append("----------------------------------------------------------\n");
             myWriter.close();
             System.out.println("File updated.");
         } catch (IOException exception) {
@@ -393,10 +401,8 @@ public  class Main{
             exception.printStackTrace();
         }
 
-
-
         text.setText(line = String.valueOf(result)); // Show result
 
     }
-    
+
 }
