@@ -13,7 +13,7 @@ public  class Main{
     static double num2 = 0;
     static double result = 0;
     static char operator;
-    static double squrtres;
+    static double squrtres = 0;
     static JTextField text = new JTextField();
     static String line = "";
 
@@ -168,25 +168,26 @@ public  class Main{
         });
 
         decimal.addActionListener(_ -> {
-            String curretText = text.getText();
-            text.setText(curretText + ".");
+            String currentText = text.getText();
+            text.setText(currentText + ".");
         });
 
         squrt.addActionListener(_ ->{
             String currentText = text.getText();
-                text.setText(String.valueOf(Math.sqrt(Double.parseDouble(currentText))));
-                squrtres = Math.sqrt(Double.parseDouble(currentText));
-                try {
-                    FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
-                    myWriter.append("squrt(").append(currentText).append(")").append(" = ");
-                    myWriter.append(String.valueOf(squrtres)).append("\n");
-                    myWriter.close();
-                    System.out.println("File updated.");
-                } catch (IOException exception) {
-                    System.out.println("Error!");
-                    exception.printStackTrace();
-                }
+            text.setText(String.valueOf(Math.sqrt(Double.parseDouble(currentText))));
+            squrtres = Math.sqrt(Double.parseDouble(currentText));
 
+            try {
+                FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
+                myWriter.append("squrt(").append(currentText).append(")").append(" = ");
+                num1 = squrtres;
+                myWriter.append(String.valueOf(num1)).append("\n");
+                myWriter.close();
+                System.out.println("File updated.");
+            } catch (IOException exception) {
+                System.out.println("Error!");
+                exception.printStackTrace();
+            }
 
         });
 
@@ -364,6 +365,7 @@ public  class Main{
     }
 
     static void handleEqual() {
+        String currentText = text.getText();
         num2 = Double.parseDouble(text.getText());
         switch (operator) {
             case '+':
@@ -389,7 +391,6 @@ public  class Main{
         }
 
         num1 = result; // Store result for chained calculations
-
         try {
             FileWriter myWriter = new FileWriter("C:\\Users\\alexs\\OneDrive\\Desktop\\history.txt", true);
             myWriter.append(line).append(" = ").append(String.valueOf(result)).append("\n");
